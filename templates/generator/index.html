@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Image Generator</title>
+    <style>
+        /* --- General Body Styling --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5; /* A soft, modern background color */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding-top: 50px;
+            margin: 0;
+        }
+
+        /* --- The Glass Container --- */
+        .glass-container {
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 20px;
+            
+            /* The Glass Effect */
+            background: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
+            backdrop-filter: blur(25px); /* This creates the frosted glass blur */
+            -webkit-backdrop-filter: blur(25px); /* For Safari compatibility */
+            
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            
+            text-align: center;
+        }
+        
+        /* --- Text and Form Styling --- */
+        h1 {
+            color: #1d1d1f;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .prompt-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            color: #333;
+            outline: none; /* Removes the blue glow on focus */
+        }
+        
+        input[type="text"]::placeholder {
+            color: #6c757d;
+        }
+
+        button {
+            border: none;
+            background-color: #007aff;
+            color: white;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Result Area Styling --- */
+        .result-area {
+            margin-top: 30px;
+        }
+        
+        .result-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .result-container img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .download-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            backdrop-filter: blur(10px); /* Glass effect for the button too */
+            transition: background-color 0.2s ease;
+        }
+        
+        .download-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        p {
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+        <h1>AI Image Generator</h1>
+        
+        <form class="prompt-form" method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <input type="text" name="prompt" placeholder="Describe the image you want to create" value="{{ prompt_text }}" required>
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if image_data %}
+            <div class="result-area">
+                <p><strong>Your prompt:</strong> {{ prompt_text }}</p> 
+                
+                <div class="result-container">
+                    <img src="{{ image_data }}" alt="Generated image">
+                    <a href="{{ image_data }}" class="download-btn" download="generated_image.png">Download</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+

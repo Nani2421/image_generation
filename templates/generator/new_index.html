@@ -1,0 +1,24 @@
+{% extends "generator/base.html" %}
+
+{% block content %}
+    <div class="glass-container">
+        <h1>AI Image Generator</h1>
+        
+        <form class="prompt-form" method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <input type="text" name="prompt" placeholder="Describe the image you want to create" value="{{ prompt_text }}" required>
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if image_data %}
+            <div class="result-area">
+                <p><strong>Your prompt:</strong> {{ prompt_text }}</p> 
+                
+                <div class="result-container">
+                    <img src="{{ image_data }}" alt="Generated image">
+                    <a href="{{ image_data }}" class="download-btn" download="generated_image.png">Download</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
