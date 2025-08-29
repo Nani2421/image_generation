@@ -122,6 +122,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STABILITY_API_KEY = "sk-qW8eKF9AXj2H61cldqvLCAuHifAnhFNzqby3ifU2hmOAyujI"
+STABILITY_API_KEY = "your_api_key"
 
 # LOGIN_REDIRECT_URL = 'home'
